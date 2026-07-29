@@ -9,6 +9,7 @@ __pycache__/
 
 # RL training logs / checkpoints
 logs/
+wandb/
 
 # MuJoCo
 MUJOCO_LOG.TXT
