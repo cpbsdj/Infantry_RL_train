@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "infantry"
+version = "0.1.0"
+description = "Infantry wheel-leg robot RL environment built on mjlab."
+requires-python = ">=3.10"
+dependencies = [
+  "mjlab",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+infantry = ["**/*.xml", "**/*.STL", "**/*.obj", "**/*.stl"]
+
+# 如需本地开发 mjlab，取消下面两行注释并改为你的本地路径：
+# [tool.uv.sources]
+# mjlab = { path = "/path/to/mjlab", editable = true }
+
+[project.entry-points."mjlab.tasks"]
+infantry = "infantry.tasks.velocity.config.infantry"

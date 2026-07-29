@@ -1,0 +1,586 @@
+<mujoco model="leg_wheel_infantry">
+  <compiler angle="radian" />
+  <option timestep="0.0002" integrator="RK4" solver="Newton" cone="elliptic" iterations="100" tolerance="1e-10" impratio="10" />
+
+  <default>
+  <!-- <joint damping="0.01" frictionloss="0.01" /> -->
+    <default class="robot">
+      <default class="motor">
+        <joint />
+        <motor />
+      </default>
+      <default class="visual">
+        <geom material="visualgeom" contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="collision">
+        <geom material="collision_material" condim="3" contype="0" conaffinity="1" priority="1" group="1" solref="0.005 1" solimp="0.99 0.999 1e-2" friction="1 0.01 0.01" />
+      </default>
+    </default>
+  </default>
+
+  <asset>
+    <material name="visualgeom" rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+    <material name="default_material" rgba="0.7 0.7 0.7 1" />
+    <material name="collision_material" rgba="1.0 0.28 0.1 0.9" />
+    <material name="collision_base_material" rgba="1.0 0.28 0.1 0.1" />
+    <material name="collision_green_material" rgba="0 0.7 0 1" />
+    <material name="collision_darkred_material" rgba="0.5 0 0 1" />
+    <material name="coll_front_guidewheel_l"  rgba="0.0  0.8  0.8  1" />
+    <material name="coll_behind_guidewheel_l" rgba="1.0  0.4  0.8  1" />
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4" />
+    <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2" />
+
+    <mesh name="base_link.STL" file="assets/base_link.STL" />
+    <mesh name="base_link_part[0]" file="assets/collision/base_linkpart_0.obj"/>
+    <mesh name="base_link_part[1]" file="assets/collision/base_linkpart_1.obj"/>
+    <mesh name="base_link_part[2]" file="assets/collision/base_linkpart_2.obj"/>
+    <mesh name="base_link_part[3]" file="assets/collision/base_linkpart_3.obj"/>
+    <mesh name="base_link_part[4]" file="assets/collision/base_linkpart_4.obj"/>
+    <mesh name="base_link_part[5]" file="assets/collision/base_linkpart_5.obj"/>
+    <mesh name="base_link_part[6]" file="assets/collision/base_linkpart_6.obj"/>
+    <mesh name="base_link_part[7]" file="assets/collision/base_linkpart_7.obj"/>
+    <mesh name="base_link_part[8]" file="assets/collision/base_linkpart_8.obj"/>
+    <mesh name="base_link_part[9]" file="assets/collision/base_linkpart_9.obj"/>
+    <mesh name="base_link_part[10]" file="assets/collision/base_linkpart_10.obj"/>
+    <mesh name="base_link_part[11]" file="assets/collision/base_linkpart_11.obj"/>
+    <mesh name="base_link_part[12]" file="assets/collision/base_linkpart_12.obj"/>
+    <mesh name="base_link_part[13]" file="assets/collision/base_linkpart_13.obj"/>
+    <mesh name="base_link_part[14]" file="assets/collision/base_linkpart_14.obj"/>
+    <mesh name="base_link_part[15]" file="assets/collision/base_linkpart_15.obj"/>
+    <mesh name="base_link_part[16]" file="assets/collision/base_linkpart_16.obj"/>
+    <mesh name="base_link_part[17]" file="assets/collision/base_linkpart_17.obj"/>
+    <mesh name="base_link_part[18]" file="assets/collision/base_linkpart_18.obj"/>
+    <mesh name="base_link_part[19]" file="assets/collision/base_linkpart_19.obj"/>
+    <mesh name="base_link_part[20]" file="assets/collision/base_linkpart_20.obj"/>
+    <mesh name="base_link_part[21]" file="assets/collision/base_linkpart_21.obj"/>
+    <mesh name="base_link_part[22]" file="assets/collision/base_linkpart_22.obj"/>
+    <mesh name="base_link_part[23]" file="assets/collision/base_linkpart_23.obj"/>
+    <mesh name="base_link_part[24]" file="assets/collision/base_linkpart_24.obj"/>
+    <mesh name="base_link_part[25]" file="assets/collision/base_linkpart_25.obj"/>
+    <mesh name="base_link_part[26]" file="assets/collision/base_linkpart_26.obj"/>
+    <mesh name="base_link_part[27]" file="assets/collision/base_linkpart_27.obj"/>
+    <mesh name="base_link_part[28]" file="assets/collision/base_linkpart_28.obj"/>
+    <mesh name="base_link_part[29]" file="assets/collision/base_linkpart_29.obj"/>
+    <mesh name="base_link_part[30]" file="assets/collision/base_linkpart_30.obj"/>
+    <mesh name="base_link_part[31]" file="assets/collision/base_linkpart_31.obj"/>
+    <mesh name="base_link_part[32]" file="assets/collision/base_linkpart_32.obj"/>
+    <mesh name="base_link_part[33]" file="assets/collision/base_linkpart_33.obj"/>
+    <mesh name="base_link_part[34]" file="assets/collision/base_linkpart_34.obj"/>
+    <mesh name="base_link_part[35]" file="assets/collision/base_linkpart_35.obj"/>
+    <mesh name="base_link_part[36]" file="assets/collision/base_linkpart_36.obj"/>
+    <mesh name="base_link_part[37]" file="assets/collision/base_linkpart_37.obj"/>
+    <mesh name="base_link_part[38]" file="assets/collision/base_linkpart_38.obj"/>
+    <mesh name="base_link_part[39]" file="assets/collision/base_linkpart_39.obj"/>
+    <mesh name="base_link_part[40]" file="assets/collision/base_linkpart_40.obj"/>
+    <mesh name="base_link_part[41]" file="assets/collision/base_linkpart_41.obj"/>
+    <mesh name="base_link_part[42]" file="assets/collision/base_linkpart_42.obj"/>
+    <mesh name="base_link_part[43]" file="assets/collision/base_linkpart_43.obj"/>
+    <mesh name="base_link_part[44]" file="assets/collision/base_linkpart_44.obj"/>
+    <mesh name="base_link_part[45]" file="assets/collision/base_linkpart_45.obj"/>
+    <mesh name="base_link_part[46]" file="assets/collision/base_linkpart_46.obj"/>
+    <mesh name="base_link_part[47]" file="assets/collision/base_linkpart_47.obj"/>
+    <mesh name="gimbal_yaw_l.STL" file="assets/gimbal_yaw_l.STL" />
+    <mesh name="gimbal_yaw_l_part[0]" file="assets/collision/gimbal_yaw_lpart_0.obj"/>
+    <mesh name="gimbal_yaw_l_part[1]" file="assets/collision/gimbal_yaw_lpart_1.obj"/>  
+    <mesh name="gimbal_yaw_l_part[2]" file="assets/collision/gimbal_yaw_lpart_2.obj"/>
+    <mesh name="gimbal_yaw_l_part[3]" file="assets/collision/gimbal_yaw_lpart_3.obj"/>
+    <mesh name="gimbal_yaw_l_part[4]" file="assets/collision/gimbal_yaw_lpart_4.obj"/>
+    <mesh name="gimbal_yaw_l_part[5]" file="assets/collision/gimbal_yaw_lpart_5.obj"/>
+    <mesh name="gimbal_yaw_l_part[6]" file="assets/collision/gimbal_yaw_lpart_6.obj"/>
+    <mesh name="gimbal_yaw_l_part[7]" file="assets/collision/gimbal_yaw_lpart_7.obj"/>
+
+    <mesh name="gimbal_pitch_l.STL" file="assets/gimbal_pitch_l.STL" />
+    <mesh name="gimbal_pitch_1_l.STL" file="assets/gimbal_pitch_1_l.STL" />
+    <mesh name="pitch_l.STL" file="assets/pitch_l.STL" />
+    <mesh name="pitch_l_part[0]" file="assets/collision/pitch_lpart_0.obj"/>
+    <mesh name="pitch_l_part[1]" file="assets/collision/pitch_lpart_1.obj"/>
+    <mesh name="pitch_l_part[2]" file="assets/collision/pitch_lpart_2.obj"/>
+    <mesh name="pitch_l_part[3]" file="assets/collision/pitch_lpart_3.obj"/>
+    <mesh name="pitch_l_part[4]" file="assets/collision/pitch_lpart_4.obj"/>
+    <mesh name="pitch_l_part[5]" file="assets/collision/pitch_lpart_5.obj"/>
+    <mesh name="pitch_l_part[6]" file="assets/collision/pitch_lpart_6.obj"/>
+    <mesh name="pitch_l_part[7]" file="assets/collision/pitch_lpart_7.obj"/>
+    <mesh name="pitch_l_part[8]" file="assets/collision/pitch_lpart_8.obj"/>
+    <mesh name="pitch_l_part[9]" file="assets/collision/pitch_lpart_9.obj"/>
+
+    <mesh name="right_behind_l.STL" file="assets/right_behind_l.STL" />
+    <mesh name="right_behind_l_part[0]" file="assets/collision/right_behind_lpart_0.obj" />
+    <mesh name="right_behind_l_part[1]" file="assets/collision/right_behind_lpart_1.obj" />
+    <mesh name="right_behind_l_part[2]" file="assets/collision/right_behind_lpart_2.obj" />
+    <mesh name="right_behind_l_part[3]" file="assets/collision/right_behind_lpart_3.obj" />
+    <mesh name="right_behind_l_part[4]" file="assets/collision/right_behind_lpart_4.obj" />
+    <mesh name="right_behind_l_part[5]" file="assets/collision/right_behind_lpart_5.obj" />
+    <mesh name="right_behind_l_part[6]" file="assets/collision/right_behind_lpart_6.obj" />
+    <mesh name="right_behind_l_part[7]" file="assets/collision/right_behind_lpart_7.obj" />
+    <mesh name="right_behind_l_part[8]" file="assets/collision/right_behind_lpart_8.obj" />
+    <mesh name="right_behind_l_part[9]" file="assets/collision/right_behind_lpart_9.obj" />
+    <mesh name="right_behind_l_part[10]" file="assets/collision/right_behind_lpart_10.obj" />
+    <mesh name="right_behind_l_part[11]" file="assets/collision/right_behind_lpart_11.obj" />
+    <mesh name="right_behind_l_part[12]" file="assets/collision/right_behind_lpart_12.obj" />
+    <mesh name="right_behind_l_part[13]" file="assets/collision/right_behind_lpart_13.obj" />
+    <mesh name="right_behind_l_part[14]" file="assets/collision/right_behind_lpart_14.obj" />
+    <mesh name="right_behind_l_part[15]" file="assets/collision/right_behind_lpart_15.obj" />
+    <mesh name="right_behind_l_part[16]" file="assets/collision/right_behind_lpart_16.obj" />
+    <mesh name="right_behind_l_part[17]" file="assets/collision/right_behind_lpart_17.obj" />
+    <mesh name="right_behind_l_part[18]" file="assets/collision/right_behind_lpart_18.obj" />
+    <mesh name="right_behind_l_part[19]" file="assets/collision/right_behind_lpart_19.obj" />
+    <mesh name="right_behind_l_part[20]" file="assets/collision/right_behind_lpart_20.obj" />
+    <mesh name="right_behind_l_part[21]" file="assets/collision/right_behind_lpart_21.obj" />
+    <mesh name="right_behind_l_part[22]" file="assets/collision/right_behind_lpart_22.obj" />
+    <mesh name="right_behind_l_part[23]" file="assets/collision/right_behind_lpart_23.obj" />
+    <mesh name="right_behind_l_part[24]" file="assets/collision/right_behind_lpart_24.obj" />
+    <mesh name="right_behind_l_part[25]" file="assets/collision/right_behind_lpart_25.obj" />
+    <mesh name="right_behind_l_part[26]" file="assets/collision/right_behind_lpart_26.obj" />
+    <mesh name="right_behind_l_part[27]" file="assets/collision/right_behind_lpart_27.obj" />
+    <mesh name="right_behind_withwheel_l.STL" file="assets/right_behind_withwheel_l.STL" />
+    <mesh name="right_behind_withwheel_l_part[0]" file="assets/collision/right_behind_withwheel_lpart_0.obj"/>
+    <mesh name="right_behind_withwheel_l_part[1]" file="assets/collision/right_behind_withwheel_lpart_1.obj"/>
+    <mesh name="right_behind_withwheel_l_part[2]" file="assets/collision/right_behind_withwheel_lpart_2.obj"/>
+    <mesh name="right_behind_withwheel_l_part[3]" file="assets/collision/right_behind_withwheel_lpart_3.obj"/>
+    <mesh name="right_behind_withwheel_l_part[4]" file="assets/collision/right_behind_withwheel_lpart_4.obj"/>
+    <mesh name="right_behind_withwheel_l_part[5]" file="assets/collision/right_behind_withwheel_lpart_5.obj"/>
+    <mesh name="right_behind_withwheel_l_part[6]" file="assets/collision/right_behind_withwheel_lpart_6.obj"/>
+    <mesh name="right_behind_withwheel_l_part[7]" file="assets/collision/right_behind_withwheel_lpart_7.obj"/>
+    <mesh name="right_behind_withwheel_l_part[8]" file="assets/collision/right_behind_withwheel_lpart_8.obj"/>
+    <mesh name="right_behind_withwheel_l_part[9]" file="assets/collision/right_behind_withwheel_lpart_9.obj"/>
+    <mesh name="right_behind_withwheel_l_part[10]" file="assets/collision/right_behind_withwheel_lpart_10.obj"/>
+    <mesh name="right_behind_withwheel_l_part[11]" file="assets/collision/right_behind_withwheel_lpart_11.obj"/>
+    <mesh name="right_behind_withwheel_l_part[12]" file="assets/collision/right_behind_withwheel_lpart_12.obj"/>
+    <mesh name="right_behind_withwheel_l_part[13]" file="assets/collision/right_behind_withwheel_lpart_13.obj"/>
+    <mesh name="right_wheel_l.STL" file="assets/right_wheel_l.STL" />
+    <mesh name="right_wheel_l_part[0]" file="assets/collision/right_wheel_lpart_0.obj" />
+    <mesh name="right_wheel_l_part[1]" file="assets/collision/right_wheel_lpart_0.obj" />
+    <mesh name="right_wheel_l_part[2]" file="assets/collision/right_wheel_lpart_0.obj" />
+    <mesh name="right_wheel_l_part[3]" file="assets/collision/right_wheel_lpart_0.obj" />
+    <mesh name="right_wheel_l_part[4]" file="assets/collision/right_wheel_lpart_0.obj" />
+    <mesh name="left_behind_l.STL" file="assets/left_behind_l.STL" />
+    <mesh name="left_behind_l_part[0]" file="assets/collision/left_behind_lpart_0.obj" />
+    <mesh name="left_behind_l_part[1]" file="assets/collision/left_behind_lpart_1.obj" />
+    <mesh name="left_behind_l_part[2]" file="assets/collision/left_behind_lpart_2.obj" />
+    <mesh name="left_behind_l_part[3]" file="assets/collision/left_behind_lpart_3.obj" />
+    <mesh name="left_behind_l_part[4]" file="assets/collision/left_behind_lpart_4.obj" />
+    <mesh name="left_behind_l_part[5]" file="assets/collision/left_behind_lpart_5.obj" />
+    <mesh name="left_behind_l_part[6]" file="assets/collision/left_behind_lpart_6.obj" />
+    <mesh name="left_behind_l_part[7]" file="assets/collision/left_behind_lpart_7.obj" />
+    <mesh name="left_behind_l_part[8]" file="assets/collision/left_behind_lpart_8.obj" />
+    <mesh name="left_behind_l_part[9]" file="assets/collision/left_behind_lpart_9.obj" />
+    <mesh name="left_behind_l_part[10]" file="assets/collision/left_behind_lpart_10.obj" />
+    <mesh name="left_behind_l_part[11]" file="assets/collision/left_behind_lpart_11.obj" />
+    <mesh name="left_behind_l_part[12]" file="assets/collision/left_behind_lpart_12.obj" />
+    <mesh name="left_behind_l_part[13]" file="assets/collision/left_behind_lpart_13.obj" />
+    <mesh name="left_behind_l_part[14]" file="assets/collision/left_behind_lpart_14.obj" />
+    <mesh name="left_behind_l_part[15]" file="assets/collision/left_behind_lpart_15.obj" />
+    <mesh name="left_behind_l_part[16]" file="assets/collision/left_behind_lpart_16.obj" />
+    <mesh name="left_behind_l_part[17]" file="assets/collision/left_behind_lpart_17.obj" />
+    <mesh name="left_behind_l_part[18]" file="assets/collision/left_behind_lpart_18.obj" />
+    <mesh name="left_behind_l_part[19]" file="assets/collision/left_behind_lpart_19.obj" />
+    <mesh name="left_behind_l_part[20]" file="assets/collision/left_behind_lpart_20.obj" />
+    <mesh name="left_behind_l_part[21]" file="assets/collision/left_behind_lpart_21.obj" />
+    <mesh name="left_behind_l_part[22]" file="assets/collision/left_behind_lpart_22.obj" />
+    <mesh name="left_behind_l_part[23]" file="assets/collision/left_behind_lpart_23.obj" />
+    <mesh name="left_behind_l_part[24]" file="assets/collision/left_behind_lpart_24.obj" />
+    <mesh name="left_behind_l_part[25]" file="assets/collision/left_behind_lpart_25.obj" />
+    <mesh name="left_behind_l_part[26]" file="assets/collision/left_behind_lpart_26.obj" />
+    <mesh name="left_behind_l_part[27]" file="assets/collision/left_behind_lpart_27.obj" />
+    <mesh name="left_behind_l_part[28]" file="assets/collision/left_behind_lpart_28.obj" />
+    <mesh name="left_behind_l_part[29]" file="assets/collision/left_behind_lpart_29.obj" />
+    <mesh name="left_behind_l_part[30]" file="assets/collision/left_behind_lpart_30.obj" />
+    <mesh name="left_behind_l_part[31]" file="assets/collision/left_behind_lpart_31.obj" />
+    <mesh name="left_behind_l_part[32]" file="assets/collision/left_behind_lpart_32.obj" />
+    <mesh name="left_behind_l_part[33]" file="assets/collision/left_behind_lpart_33.obj" />
+    <mesh name="left_behind_l_part[34]" file="assets/collision/left_behind_lpart_34.obj" />
+    <mesh name="left_behind_l_part[35]" file="assets/collision/left_behind_lpart_35.obj" />
+    <mesh name="left_behind_l_part[36]" file="assets/collision/left_behind_lpart_36.obj" />
+    <mesh name="left_behind_l_part[37]" file="assets/collision/left_behind_lpart_37.obj" />
+    <mesh name="left_behind_l_part[38]" file="assets/collision/left_behind_lpart_38.obj" />
+    <mesh name="left_behind_l_part[39]" file="assets/collision/left_behind_lpart_39.obj" />
+    <mesh name="left_behind_l_part[40]" file="assets/collision/left_behind_lpart_40.obj" />
+    <mesh name="left_behind_l_part[41]" file="assets/collision/left_behind_lpart_41.obj" />
+    <mesh name="left_behind_l_part[42]" file="assets/collision/left_behind_lpart_42.obj" />
+    <mesh name="left_behind_l_part[43]" file="assets/collision/left_behind_lpart_43.obj" />
+    <mesh name="left_behind_l_part[44]" file="assets/collision/left_behind_lpart_44.obj" />
+    <mesh name="left_behind_l_part[45]" file="assets/collision/left_behind_lpart_45.obj" />
+    <mesh name="left_behind_withwheel_l.STL" file="assets/left_behind_withwheel_l.STL" />
+    <mesh name="left_behind_withwheel_l_part[0]" file="assets/collision/left_behind_withwheel_lpart_0.obj" />
+    <mesh name="left_behind_withwheel_l_part[1]" file="assets/collision/left_behind_withwheel_lpart_1.obj" />
+    <mesh name="left_behind_withwheel_l_part[2]" file="assets/collision/left_behind_withwheel_lpart_2.obj" />
+    <mesh name="left_behind_withwheel_l_part[3]" file="assets/collision/left_behind_withwheel_lpart_3.obj" />
+    <mesh name="left_behind_withwheel_l_part[4]" file="assets/collision/left_behind_withwheel_lpart_4.obj" />
+    <mesh name="left_wheel_l.STL" file="assets/left_wheel_l.STL" />
+    <mesh name="left_wheel_l_part[0]" file="assets/collision/left_wheel_lpart_0.obj" />
+    <mesh name="left_wheel_l_part[1]" file="assets/collision/left_wheel_lpart_0.obj" />
+    <mesh name="left_wheel_l_part[2]" file="assets/collision/left_wheel_lpart_0.obj" />
+    <mesh name="left_wheel_l_part[3]" file="assets/collision/left_wheel_lpart_0.obj" />
+    <mesh name="left_wheel_l_part[4]" file="assets/collision/left_wheel_lpart_0.obj" />
+    <mesh name="right_front_guidewheel_l.STL" file="assets/right_front_guidewheel_l.STL" />
+    <mesh name="left_front_guidewheel_l.STL" file="assets/left_front_guidewheel_l.STL" />
+    <mesh name="right_behind_guidewheel_l.STL" file="assets/right_behind_guidewheel_l.STL" />
+    <mesh name="left_behind_guidewheel_l.STL" file="assets/left_behind_guidewheel_l.STL" />
+    <mesh name="guidewheel_part[0]" file="assets/collision/left_behind_guidewheel_lpart_0.obj" />
+    <mesh name="guidewheel_part[1]" file="assets/collision/left_behind_guidewheel_lpart_1.obj" />
+    <mesh name="guidewheel_part[2]" file="assets/collision/left_behind_guidewheel_lpart_2.obj" />
+    <mesh name="guidewheel_part[3]" file="assets/collision/left_behind_guidewheel_lpart_3.obj" />
+    <mesh name="guidewheel_part[4]" file="assets/collision/left_behind_guidewheel_lpart_4.obj" />
+  </asset>
+
+  <worldbody>
+    <light diffuse="1.0 1.0 1.0" pos="0 0 20" dir="0 0 -1" />
+    <!--geom type="plane" size="10 10 0.01" material="grid" /-->
+  
+    <body name="base_link" pos="0.0 0.0 1.0" euler="0 0 0" childclass="robot">
+      <freejoint name="floating_base" />
+      <!-- <inertial pos="0.05748791 -0.00015293 0.10258618" fullinertia="0.21638190 0.23397975 0.37363187 -0.00088876 0.00682276 -0.00111569" mass="13.33819137" /> -->
+      <inertial pos="0.05497 0 0.15493" fullinertia="0.21638190 0.23397975 0.37363187 -0.00088876 0.00682276 -0.00111569" mass="13.33819137" />
+        <geom type="mesh" mesh="base_link.STL" class="visual" />
+        <geom type="mesh" mesh="base_link_part[0]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[1]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[2]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[3]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[4]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[5]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[6]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[7]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[8]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[9]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[10]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[11]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[12]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[13]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[14]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[15]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[16]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[17]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[18]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[19]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[20]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[21]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[22]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[23]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[24]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[25]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[26]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[27]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[28]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[29]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[30]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[31]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[32]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[33]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[34]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[35]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[36]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[37]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[38]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[39]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[40]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[41]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[42]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[43]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[44]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[45]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[46]" class="collision" material="collision_base_material"/>
+        <geom type="mesh" mesh="base_link_part[47]" class="collision" material="collision_base_material"/>
+      <site name="base_link_site" pos="0 0 0" quat="1 0 0 0" />
+
+      <!-- gimbal_yaw_joint: base_link -> gimbal_yaw_link -->
+      <body name="gimbal_yaw_link" pos="0.05497 -6.2876E-05 0.216">
+        <inertial pos="-0.06478623 -0.01299334 0.05380955" fullinertia="0.00212711 0.00402939 0.00284049 -0.00018732 0.00117713 0.00032730" mass="3.96430692" />
+        <geom type="mesh" mesh="gimbal_yaw_l.STL" class="visual" />
+        <geom type="mesh" mesh="gimbal_yaw_l_part[0]" class="collision"/>
+        <geom type="mesh" mesh="gimbal_yaw_l_part[1]" class="collision"/>
+        <geom type="mesh" mesh="gimbal_yaw_l_part[2]" class="collision"/>
+        <geom type="mesh" mesh="gimbal_yaw_l_part[3]" class="collision"/>
+        <geom type="mesh" mesh="gimbal_yaw_l_part[4]" class="collision"/>
+        <geom type="mesh" mesh="gimbal_yaw_l_part[5]" class="collision"/>
+        <geom type="mesh" mesh="gimbal_yaw_l_part[6]" class="collision"/>
+        <geom type="mesh" mesh="gimbal_yaw_l_part[7]" class="collision"/>
+
+
+        <!-- gimbal_pitch_joint: gimbal_yaw_link -> gimbal_pitch_link -->
+        <body name="gimbal_pitch_link" pos="0.00164847562787268 -0.0239433190703443 0.0923938769133979">
+          <inertial pos="0.02900220 0.04086318 0.03608392" fullinertia="0.00574223 0.01373438 0.01369197 0.00300376 0.00085875 -0.00031819" mass="2.19647344" />
+              <geom type="mesh" mesh="pitch_l.STL" class="visual" />
+              <geom type="mesh" mesh="pitch_l_part[0]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[1]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[2]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[3]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[4]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[5]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[6]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[7]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[8]" class="collision"/>
+              <geom type="mesh" mesh="pitch_l_part[9]" class="collision"/>
+
+          <site name="gimbal_pitch_site" pos="-0.02973509 -0.01404838 0.02294308" size="0.01" rgba="1 0 0 1"/>
+        </body>
+
+        <!-- gimbal_pitch_1_joint: gimbal_yaw_link -> gimbal_pitch_1_link -->
+        <body name="gimbal_pitch_1_link" pos="-0.071916354841862 -0.04304133253934 0.0370000000000083">
+          <inertial pos="-0.01222167560 0.00283476388 0.01006058598" fullinertia="5.51902537e-07 1.28987251e-06 7.60085228e-07 1.78861901e-08 5.13868989e-07 -1.17210680e-08" mass="0.00521498001" />
+          <geom type="mesh" mesh="gimbal_pitch_l.STL" class="visual" />
+          <geom type="mesh" mesh="gimbal_pitch_l.STL" class="collision" />
+
+          <!-- gimbal_pitch_2_joint: gimbal_pitch_1_link -> gimbal_pitch_2_link -->
+          <body name="gimbal_pitch_2_link" pos="-0.030621046620462 -0.00611770024963629 0.0253165014866359">
+            <inertial pos="0.03803767191 -0.00573095649 0.02651022258" fullinertia="2.81421637e-06 8.41856260e-06 5.64743521e-06 1.81208407e-07 -3.79799528e-06 1.22674551e-07" mass="0.00831196240" />
+            <geom type="mesh" mesh="gimbal_pitch_1_l.STL" class="visual" />
+            <geom type="mesh" mesh="gimbal_pitch_1_l.STL" class="collision" />
+            <site name="gimbal_pitch_2_site" pos="0.0763659 0.007 0.05302044" size="0.01" rgba="1 0 0 1"/>
+          </body>
+        </body>
+      </body>
+
+      <!-- right_front_joint: base_link -> right_front_link (REMOVED) -->
+
+      <!-- right_behind_joint: base_link -> right_behind_link -->
+      <body name="right_hip_link" pos="0.05497 -0.15431 0.15493">
+        <joint name="right_hip_joint" type="hinge" axis="0 -1 0" />
+        <inertial pos="-0.08270080 -0.00914114 0.00524848" fullinertia="1.3084E-04 1.2920E-03 1.1695E-03 -3.90E-06 9.293E-05 -4.8E-07" mass="0.57138070" />
+        <geom type="mesh" mesh="right_behind_l.STL" class="visual" />
+        <geom type="mesh" mesh="right_behind_l_part[0]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[1]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[2]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[3]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[4]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[5]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[6]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[7]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[8]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[9]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[10]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[11]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[12]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[13]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[14]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[15]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[16]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[17]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[18]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[19]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[20]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[21]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[22]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[23]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[24]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[25]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[26]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="right_behind_l_part[27]" class="collision" material="collision_green_material"/>
+        <site name="right_behind_site" pos="-0.0978657 -0.01824996 0.00512892" size="0.01" rgba="1 0 0 1"/>
+
+        <!-- right_behind_withwheel_joint: right_behind_link -> right_behind_withwheel_link -->
+        <body name="right_knee_link" pos="-0.190983049444668 -0.00874999999999929 -0.00299502072861904">
+          <joint name="right_knee_joint" type="hinge" axis="0 -1 0" ref="0" limited="true" range="-1.2 0.18"/>
+          <inertial pos="0.07826782 -0.01380965 -0.07255711" fullinertia="1.9384E-03 4.0685E-03 2.1455E-03 9.22E-06 1.9208E-03 -8.33E-06" mass="0.40470233" />
+          <geom type="mesh" mesh="right_behind_withwheel_l.STL" class="visual" />
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[0]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[1]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[2]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[3]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[4]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[5]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[6]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[7]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[8]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[9]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[10]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[11]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[12]" class="collision" material="collision_darkred_material"/>
+          <geom type="mesh" mesh="right_behind_withwheel_l_part[13]" class="collision" material="collision_darkred_material"/>
+          <site name="right_behind_withwheel_site" pos="-0.026 -0.013 0.04914912" size="0.01" rgba="1 0 0 1"/>
+          <!-- right_wheel_joint: right_behind_withwheel_link -> right_wheel_link -->
+          <body name="right_wheel_link" pos="0.20632438244001 -0.0410000000000011 -0.160915819741446">
+            <joint name="right_wheel_joint" type="hinge" axis="0 1 0"  />
+            <inertial pos="0.00039564 0.00052065 -0.00036894" fullinertia="3.1455E-04 5.9455E-04 3.1430E-04 -1.79E-06 -1.76E-06 1.67E-06" mass="0.58907313" />
+            <geom type="mesh" mesh="right_wheel_l.STL" class="visual" />
+            <!-- <geom type="mesh" mesh="right_wheel_l_part[0]" class="collision" />
+            <geom type="mesh" mesh="right_wheel_l_part[1]" class="collision" />
+            <geom type="mesh" mesh="right_wheel_l_part[2]" class="collision" />
+            <geom type="mesh" mesh="right_wheel_l_part[3]" class="collision" />
+            <geom type="mesh" mesh="right_wheel_l_part[4]" class="collision" /> -->
+            <geom name="right_wheel_l_collision" pos="0 0 0" quat="0.7071 0.7071 0.0 0.0" type="cylinder" size="0.06 0.02" class="collision" rgba="0 0 1 0.5"/>
+          </body>
+        </body>
+      </body>
+
+      <!-- left_front_joint: base_link -> left_front_link (REMOVED) -->
+
+      <!-- left_behind_joint: base_link -> left_behind_link -->
+      <body name="left_hip_link" pos="0.05497 0.15419 0.15493">
+        <joint name="left_hip_joint" type="hinge" axis="0 -1 0"  />
+        <inertial pos="-0.08136239 0.00879557 0.00515035" fullinertia="1.2904e-04 1.2759e-03 1.1531e-03 5.12e-08 9.147e-05 7.63e-07" mass="0.56281933" />
+
+        <geom type="mesh" mesh="left_behind_l_part[0]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[1]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[2]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[3]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[4]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[5]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[6]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[7]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[8]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[9]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[10]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[11]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[12]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[13]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[14]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[15]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[16]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[17]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[18]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[19]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[20]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[21]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[22]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[23]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[24]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[25]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[26]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[27]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[28]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[29]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[30]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[31]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[32]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[33]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[34]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[35]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[36]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[37]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[38]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[39]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[40]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[41]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[42]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[43]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[44]" class="collision" material="collision_green_material"/>
+        <geom type="mesh" mesh="left_behind_l_part[45]" class="collision" material="collision_green_material"/>
+        <site name="left_behind_site" pos="-0.09786571 0.01825 0.00512892" size="0.01" rgba="1 0 0 1"/>
+
+        <!-- left_behind_withwheel_joint: left_behind_link -> left_behind_withwheel_link -->
+        <body name="left_knee_link" pos="-0.18 0.0147499999999983 0">
+          <joint name="left_knee_joint" type="hinge" axis="0 -1 0" ref="0" limited="true" range="-1.2  0.18"/>
+          <inertial pos="0.07826780 0.01380964 -0.07255711" fullinertia="1.9384E-03 4.0685E-03 2.1455E-03 -9.22E-06 1.9208E-03 8.33E-06" mass="0.40470233" />
+          <geom type="mesh" mesh="left_behind_withwheel_l.STL" class="visual" />
+          <geom type="mesh" mesh="left_behind_withwheel_l_part[0]" class="collision" />
+          <geom type="mesh" mesh="left_behind_withwheel_l_part[1]" class="collision" />
+          <geom type="mesh" mesh="left_behind_withwheel_l_part[2]" class="collision" />
+          <geom type="mesh" mesh="left_behind_withwheel_l_part[3]" class="collision" />
+          <geom type="mesh" mesh="left_behind_withwheel_l_part[4]" class="collision" />
+          <site name="left_behind_withwheel_site" pos="-0.036 0.007 0.04914912" size="0.01" rgba="1 0 0 1"/>
+
+
+          <!-- left_wheel_joint: left_behind_withwheel_link -> left_wheel_link -->
+          <body name="left_wheel_link" pos="0.195341332995339 0.0349999999999993 -0.163910840470068">
+            <joint name="left_wheel_joint" type="hinge" axis="0 -1 0"  />
+            <inertial pos="0.00054063 -0.00052065 0.00001888" fullinertia="3.1618e-04 5.9455e-04 3.1267e-04 2.4425e-06 1.2282e-07 8.5295e-08" mass="0.58907313" />
+            <geom type="mesh" mesh="left_wheel_l.STL" class="visual" />
+            <!-- <geom type="mesh" mesh="left_wheel_l_part[0]" class="collision" />
+            <geom type="mesh" mesh="left_wheel_l_part[1]" class="collision" />
+            <geom type="mesh" mesh="left_wheel_l_part[2]" class="collision" />
+            <geom type="mesh" mesh="left_wheel_l_part[3]" class="collision" />
+            <geom type="mesh" mesh="left_wheel_l_part[4]" class="collision" /> -->
+            <geom name="left_wheel_l_collision" pos="0 0 0" quat="0.7071 0.7071 0.0 0.0" type="cylinder" size="0.06 0.02" class="collision" rgba="0 0 1 0.5"/>
+          </body>
+        </body>
+      </body>
+
+      <!-- right_front_guidewheel_joint: base_link -> right_front_guidewheel_link -->
+      <body name="right_front_guidewheel_link" pos="0.31497 -0.11876 0.0054993">
+        <joint name="right_front_guidewheel_joint" type="hinge" axis="0 -1 0"  />
+        <inertial pos="0 0 0" fullinertia="3.12120485E-07 5.93790191E-07 3.12120485E-07 0 0 0" mass="0.00507512983" />
+        <geom type="mesh" mesh="right_front_guidewheel_l.STL" class="visual" />
+        <geom type="mesh" mesh="guidewheel_part[0]" class="collision" material="coll_front_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[1]" class="collision" material="coll_front_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[2]" class="collision" material="coll_front_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[3]" class="collision" material="coll_front_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[4]" class="collision" material="coll_front_guidewheel_l"/>
+      </body>
+
+      <!-- left_front_guidewheel_joint: base_link -> left_front_guidewheel_link -->
+      <body name="left_front_guidewheel_link" pos="0.31497 0.11864 0.0054993">
+        <joint name="left_front_guidewheel_joint" type="hinge" axis="0 -1 0"  />
+        <inertial pos="0 0 0" fullinertia="3.12120485E-07 5.93790191E-07 3.12120485E-07 0 0 0" mass="0.00507512983" />
+        <geom type="mesh" mesh="left_front_guidewheel_l.STL" class="visual" />
+        <geom type="mesh" mesh="guidewheel_part[0]" class="collision" material="coll_front_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[1]" class="collision" material="coll_front_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[2]" class="collision" material="coll_front_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[3]" class="collision" material="coll_front_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[4]" class="collision" material="coll_front_guidewheel_l"/>
+      </body>
+
+      <!-- right_behind_guidewheel_joint: base_link -> right_behind_guidewheel_link -->
+      <body name="right_behind_guidewheel_link" pos="-0.20503 -0.11876 0.0054993">
+        <joint name="right_behind_guidewheel_joint" type="hinge" axis="0 -1 0"  />
+        <inertial pos="0 0 0" fullinertia="3.12120485E-07 5.93790191E-07 3.12120485E-07 0 0 0" mass="0.00507512983" />
+        <geom type="mesh" mesh="right_behind_guidewheel_l.STL" class="visual" />
+        <geom type="mesh" mesh="guidewheel_part[0]" class="collision" material="coll_behind_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[1]" class="collision" material="coll_behind_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[2]" class="collision" material="coll_behind_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[3]" class="collision" material="coll_behind_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[4]" class="collision" material="coll_behind_guidewheel_l"/>
+      </body>
+
+      <!-- left_behind_guidewheel_joint: base_link -> left_behind_guidewheel_link -->
+      <body name="left_behind_guidewheel_link" pos="-0.20503 0.118637123732007 0.00549925237528687">
+        <joint name="left_behind_guidewheel_joint" type="hinge" axis="0 -1 0"  />
+        <inertial pos="0 0 0" fullinertia="3.12120485E-07 5.93790191E-07 3.12120485E-07 0 0 0" mass="0.00507512983" />
+        <geom type="mesh" mesh="left_behind_guidewheel_l.STL" class="visual" />
+        <geom type="mesh" mesh="guidewheel_part[0]" class="collision" material="coll_behind_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[1]" class="collision" material="coll_behind_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[2]" class="collision" material="coll_behind_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[3]" class="collision" material="coll_behind_guidewheel_l"/>
+        <geom type="mesh" mesh="guidewheel_part[4]" class="collision" material="coll_behind_guidewheel_l"/>
+      </body>
+
+    </body>
+
+    <!-- <body name="complex_stair" pos="1.0 2 0">
+      <geom type="box" pos="-0.5 0 0.175" size="1.5 2.0 0.175" rgba="0.7 0.7 0.7 1" />
+      <geom type="box" pos="1.075 0 0.20" size="0.075 2.0 0.20" rgba="0.65 0.65 0.65 1" />
+      <geom type="box" pos="1.55 0 0.10" size="0.4 2.0 0.10" rgba="0.6 0.6 0.6 1" />
+    </body>
+    <body name="step_5cm" pos="0.5 0 0.025">
+      <geom type="box" size="0.075 1.0 0.025" rgba="0.8 0.6 0.4 1" />
+    </body> -->
+  </worldbody>
+
+  <actuator>
+    <motor name="left_hip" joint="left_hip_joint" class="motor" ctrllimited="true" ctrlrange="-50 50"/>
+    <motor name="left_knee" joint="left_knee_joint" class="motor" ctrllimited="true" ctrlrange="-50 50"/>
+    <motor name="left_wheel" joint="left_wheel_joint" class="motor"  ctrllimited="true" ctrlrange="-50 50"/>
+    <motor name="right_hip" joint="right_hip_joint" class="motor" ctrllimited="true" ctrlrange="-50 50"/>
+    <motor name="right_knee" joint="right_knee_joint" class="motor" ctrllimited="true" ctrlrange="-50 50"/>
+    <motor name="right_wheel" joint="right_wheel_joint" class="motor" />
+  </actuator>
+
+  <contact>
+    <exclude body1="base_link" body2="gimbal_yaw_link"/>
+    <exclude body1="gimbal_yaw_link" body2="gimbal_pitch_link"/>
+    <exclude body1="gimbal_yaw_link" body2="gimbal_pitch_1_link"/>
+    <exclude body1="gimbal_yaw_link" body2="gimbal_pitch_2_link"/>
+    <exclude body1="base_link" body2="right_hip_link"/>
+    <exclude body1="right_knee_link" body2="right_wheel_link"/>
+    <exclude body1="base_link" body2="left_hip_link"/>
+    <exclude body1="left_knee_link" body2="left_wheel_link"/>
+    <exclude body1="base_link" body2="right_wheel_link" />
+    <exclude body1="base_link" body2="right_knee_link" />
+    <exclude body1="base_link" body2="left_wheel_link" />
+    <exclude body1="base_link" body2="left_knee_link" />
+  </contact>
+
+  <sensor>
+    <framepos name="base_link_site_pos" objtype="site" objname="base_link_site" />
+    <framequat name="base_link_site_quat" objtype="site" objname="base_link_site" />
+    <framelinvel name="base_link_site_linvel" objtype="site" objname="base_link_site" />
+    <frameangvel name="base_link_site_angvel" objtype="site" objname="base_link_site" />
+    <velocimeter name="base_link_site_vel" site="base_link_site" />
+    <accelerometer name="base_link_accel" site="base_link_site" />
+    <gyro name="imu_gyro" site="base_link_site" />
+  </sensor>
+
+  <equality>
+    <connect site1="gimbal_pitch_2_site" site2="gimbal_pitch_site" solref="0.001 1" solimp="0.99 0.99 0.01"/>
+  </equality>
+
+</mujoco>

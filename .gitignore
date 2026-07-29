@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+
+# Virtual environments
+.venv/
+
+# RL training logs / checkpoints
+logs/
+
+# MuJoCo
+MUJOCO_LOG.TXT
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# CodeBuddy
+.codebuddy/

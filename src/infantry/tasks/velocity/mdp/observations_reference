@@ -1,0 +1,51 @@
+from __future__ import annotations
+
+import torch
+from typing import TYPE_CHECKING
+
+import omni.isaac.lab.utils.math as math_utils
+from omni.isaac.lab.assets import Articulation, RigidObject
+from omni.isaac.lab.managers import SceneEntityCfg
+from omni.isaac.lab.managers.manager_base import ManagerTermBase
+from omni.isaac.lab.managers.manager_term_cfg import ObservationTermCfg
+from omni.isaac.lab.sensors import Camera, Imu, RayCaster, RayCasterCamera, TiledCamera
+
+if TYPE_CHECKING:
+    from omni.isaac.lab.envs import ManagerBasedEnv, ManagerBasedRLEnv
+
+
+"""
+Root state.
+"""
+
+def base_lin_vel_yaw(env: ManagerBasedEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    """
+    Returns the robot's root linear velocity expressed in the yaw-aligned frame.
+
+    This function converts the world-frame linear velocity into a coordinate frame that is
+    aligned with the robot's heading (yaw only) by ignoring the pitch and roll. This is useful
+    for tasks where the vertical component of motion (caused by tilting) should not affect the 
+    horizontal speed evaluation.
+    """
+    # Get the robot asset
+    asset: RigidObject = env.scene[asset_cfg.name]
+
+    # Transform the robot's world-frame linear velocity into the yaw frame.
+    # This effectively "removes" the pitch and roll components.
+    return math_utils.quat_rotate_inverse(math_utils.yaw_quat(asset.data.root_quat_w), asset.data.root_lin_vel_w[:, :3])
+
+
+def base_ang_vel_yaw(env: ManagerBasedEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    """
+    Returns the robot's root angular velocity expressed in the yaw-aligned frame.
+
+    This function extracts only the yaw component (rotation about the vertical axis) from the 
+    robot's world-frame angular velocity, ignoring any pitch and roll rotations. The output 
+    is a 3D vector where only the z-axis (yaw) is non-zero.
+    """
+    # Get the robot asset
+    asset: RigidObject = env.scene[asset_cfg.name]
+
+    # Transform the robot's world-frame angular velocity into the yaw frame.
+    # This effectively "removes" the pitch and roll components.
+    return math_utils.quat_rotate_inverse(math_utils.yaw_quat(asset.data.root_quat_w), asset.data.root_ang_vel_w[:, :3])
