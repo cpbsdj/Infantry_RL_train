@@ -35,7 +35,44 @@ uv run list-envs
 
 应能看到 `Mjlab-Velocity-Flat-Infantry` 和 `Mjlab-Velocity-Rough-Infantry`。
 
-### 4. 训练
+### 4. 配置 W&B 实验追踪
+
+训练过程会通过 [Weights & Biases](https://wandb.ai) 记录实验数据。首次使用前需要完成以下配置：
+
+#### 4.1 注册并登录 wandb
+
+```bash
+pip install wandb
+wandb login
+# 输入你的 API Key（从 https://wandb.ai/authorize 获取）
+```
+
+#### 4.2 设置 Entity（Team）
+
+实验数据需要上传到团队 `wheelleg_RL_train_group` 下。请通过以下**任一方式**设置：
+
+**方式一：终端设置环境变量（推荐）**
+
+每次训练前在终端中执行：
+
+```bash
+export WANDB_ENTITY="wheelleg_RL_train_group"
+```
+
+也可以写入 `~/.bashrc` 永久生效：
+
+```bash
+echo 'export WANDB_ENTITY="wheelleg_RL_train_group"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+**方式二：在 wandb 网页端设置默认 Entity**
+
+访问 [wandb.ai/settings](https://wandb.ai/settings) → 找到 **"Default location to create new projects"** → 设置为 `wheelleg_RL_train_group`。
+
+> **注意**：如果不设置 `WANDB_ENTITY`，实验数据会默认上传到个人账户下，团队成员无法查看。
+
+### 5. 训练
 
 ```bash
 # 单 GPU 训练（Flat 地形）
@@ -47,7 +84,7 @@ uv run train Mjlab-Velocity-Flat-Infantry --gpu-ids 0,1
 
 训练日志和 checkpoint 保存在 `logs/rsl_rl/<experiment_name>/<timestamp>/` 下。
 
-### 5. 使用 MuJoCo Simulator 可视化回放
+### 6. 使用 MuJoCo Simulator 可视化回放
 
 ```bash
 # 找到最新的 checkpoint 路径，例如：
@@ -63,7 +100,7 @@ uv run play Mjlab-Velocity-Flat-Infantry \
   --num-envs 1
 ```
 
-### 6. 使用 Viser 可视化回放
+### 7. 使用 Viser 可视化回放
 
 Viser 是基于浏览器的交互式可视化工具，适合在无显示器的远程服务器上使用。
 
