@@ -39,6 +39,7 @@ def infantry_ppo_runner_cfg() -> RslRlOnPolicyRunnerCfg:
     ),
     experiment_name="infantry_velocity",
     wandb_project="Infantry_RL_train",
+    wandb_entity="wheelleg_RL_train_group",
     num_steps_per_env=24,
     max_iterations=10000,
     save_interval=50,
