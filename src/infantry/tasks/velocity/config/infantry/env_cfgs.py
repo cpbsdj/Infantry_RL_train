@@ -29,6 +29,7 @@ from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 
 from infantry.tasks.velocity.mdp import observations as infantry_observations
 from infantry.tasks.velocity.mdp import rewards as infantry_rewards
+from infantry.tasks.velocity.mdp.commands_cfg import HeightCommandCfg, RMVelocityCommandCfg
 from mjlab.terrains import TerrainEntityCfg
 from mjlab.terrains.config import ROUGH_TERRAINS_CFG
 from mjlab.utils.noise import UniformNoiseCfg as Unoise
@@ -41,36 +42,7 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
   # Sensors
   ##
 
-    #   terrain_scan = RayCastSensorCfg(
-    #     name="terrain_scan",
-    #     frame=ObjRef(type="body", name="", entity="robot"),  # Set per-robot.
-    #     ray_alignment="yaw",
-    #     pattern=GridPatternCfg(size=(1.6, 1.0), resolution=0.1),
-    #     max_distance=5.0,
-    #     exclude_parent_body=True,
-    #     include_geom_groups=(0,),  # Terrain only.
-    #     debug_vis=True,
-    #   )
-
-    #   foot_height_scan = TerrainHeightSensorCfg(
-    #     name="foot_height_scan",
-    #     frame=(),  # Set per-robot: frame and pattern.
-    #     ray_alignment="yaw",
-    #     max_distance=1.0,
-    #     exclude_parent_body=True,
-    #     include_geom_groups=(0,),  # Terrain only.
-    #     debug_vis=True,
-    #     viz=TerrainHeightSensorCfg.VizCfg(
-    #       show_rays=True,
-    #       hit_color=(1.0, 0.0, 1.0, 0.8),  # Magenta rays.
-    #       hit_sphere_color=(1.0, 0.0, 1.0, 1.0),
-    #     ),
-    #   )
-
   # Contact sensor for undesired_contacts reward.
-  # reduce="netforce" gives per-body net contact wrench; global_frame is implicit.
-  # history_length=decimation so the buffer covers exactly one policy step,
-  # allowing the reward to catch brief collisions that resolve mid-substep.
   contact_forces = ContactSensorCfg(
     name="contact_forces",
     primary=ContactMatch(
@@ -82,6 +54,18 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
     fields=("force",),
     reduce="netforce",
     history_length=3,
+  )
+
+  # Height scan sensor for the base height command.
+  height_scan = RayCastSensorCfg(
+    name="height_scan",
+    frame=ObjRef(type="body", name="base_link", entity="robot"),
+    ray_alignment="yaw",
+    pattern=GridPatternCfg(size=(1.0, 1.0), resolution=0.1),
+    max_distance=5.0,
+    exclude_parent_body=True,
+    include_geom_groups=(0,),
+    debug_vis=False,
   )
 
   ##
@@ -150,29 +134,6 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
 
   critic_terms = {
     **actor_terms,
-    # Critic sees the true (unbiased) joint positions as privileged information.
-    # "joint_pos": ObservationTermCfg(func=mdp.joint_pos_rel),
-    # "height_scan": ObservationTermCfg(
-    #   func=envs_mdp.height_scan,
-    #   params={"sensor_name": "terrain_scan"},
-    #   scale=1 / terrain_scan.max_distance,
-    # ),
-    # "foot_height": ObservationTermCfg(
-    #   func=mdp.foot_height,
-    #   params={"sensor_name": "foot_height_scan"},
-    # ),
-    # "foot_air_time": ObservationTermCfg(
-    #   func=mdp.foot_air_time,
-    #   params={"sensor_name": "feet_ground_contact"},
-    # ),
-    # "foot_contact": ObservationTermCfg(
-    #   func=mdp.foot_contact,
-    #   params={"sensor_name": "feet_ground_contact"},
-    # ),
-    # "foot_contact_forces": ObservationTermCfg(
-    #   func=mdp.foot_contact_forces,
-    #   params={"sensor_name": "feet_ground_contact"},
-    # ),
   }
 
   observations = {
@@ -222,22 +183,48 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
   ##
 
   commands: dict[str, CommandTermCfg] = {
-    "base_velocity": UniformVelocityCommandCfg(
+   
+    # "base_velocity": UniformVelocityCommandCfg(
+    #   entity_name="robot",
+    #   resampling_time_range=(10.0, 10.0),
+    #   rel_standing_envs=0.1,
+    #   rel_heading_envs=0.4,
+    #   rel_forward_envs=0.2,
+    #   heading_command=True,
+    #   heading_control_stiffness=0.5,
+    #   debug_vis=True,
+    #   ranges=UniformVelocityCommandCfg.Ranges(
+    #     lin_vel_x=(-1.5, 1.5),
+    #     lin_vel_y=(-0.5, 0.5),
+    #     ang_vel_z=(-1.0, 1.0),
+    #     heading=(-math.pi, math.pi),
+    #   ),
+    # ),
+   
+    "base_velocity": RMVelocityCommandCfg(
       entity_name="robot",
       resampling_time_range=(10.0, 10.0),
       rel_standing_envs=0.1,
+      rel_pure_rotation_envs=0.1,
       rel_heading_envs=0.4,
-      rel_forward_envs=0.2,
-      heading_command=True,
-      heading_control_stiffness=0.5,
+      heading_control_stiffness=1.0,
       debug_vis=True,
-      ranges=UniformVelocityCommandCfg.Ranges(
+      ranges=RMVelocityCommandCfg.Ranges(
         lin_vel_x=(-1.5, 1.5),
-        lin_vel_y=(-0.5, 0.5),
+        lin_vel_y=(-0.0, 0.0),
         ang_vel_z=(-1.0, 1.0),
-        heading=(-math.pi, math.pi),
+        pure_rotation_ang_vel_z=(-8.0, 8.0),
       ),
-    )
+    ),
+    "base_height": HeightCommandCfg(
+      entity_name="robot",
+      resampling_time_range=(10.0, 10.0),
+      sensor_name="height_scan",
+      ranges=HeightCommandCfg.Ranges(
+        height_z=(0.25, 0.4),
+      ),
+      debug_vis=False,
+    ),
   }
 
   ##
@@ -470,7 +457,7 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
       terrain=TerrainEntityCfg(
         terrain_type="plane",
       ),
-      sensors=(contact_forces,),
+      sensors=(contact_forces, height_scan),
       num_envs=1,
       extent=2.0,
     ),
