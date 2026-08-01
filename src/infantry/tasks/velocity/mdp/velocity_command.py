@@ -1,12 +1,8 @@
 """RM-style velocity command generator.
 
-Faithful port of the IsaacLab ``RMVelocityCommand`` reference to mjlab.
-Key differences from the IsaacLab original:
-  - ``VisualizationMarkers`` (USD) replaced by mjlab's ``DebugVisualizer`` API.
-  - IsaacLab's implicit coordinate-frame convention (pos/quat at link origin,
     lin_vel/ang_vel at COM origin) is made explicit via mjlab's named
     properties (``root_link_*`` / ``root_com_*``). See #TODO markers.
-  - ``heading_error = -heading_w`` is preserved as-is (no ``wrap_to_pi``).
+    ``heading_error = -heading_w`` is preserved as-is (no ``wrap_to_pi``).See #NOTE markers.
 """
 
 from __future__ import annotations
@@ -73,10 +69,7 @@ class RMVelocityCommand(CommandTerm):
     self.pure_rotation_vel_command_b = torch.zeros(self.num_envs, 3, device=self.device)
     self.is_standing_env = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
     self.is_heading_env = torch.zeros(self.num_envs, dtype=torch.bool, device=self.device)
-    # -- metrics
-    self.metrics["error_vel_xy"] = torch.zeros(self.num_envs, device=self.device)
-    self.metrics["error_vel_yaw"] = torch.zeros(self.num_envs, device=self.device)
-
+    
     # Set by create_gui() when the viewer is active.
     self._joystick_enabled: viser.GuiCheckboxHandle | None = None
     self._joystick_sliders: list[viser.GuiSliderHandle] = []
@@ -106,20 +99,10 @@ class RMVelocityCommand(CommandTerm):
   """
 
   def _update_metrics(self):
-    # time for which the command was executed
-    max_command_time = self.cfg.resampling_time_range[1]
-    max_command_step = max_command_time / self._env.step_dt
-    # logs data
-    # TODO(IsaacLab->mjlab): IsaacLab root_lin_vel_b is at COM origin.
-    # mjlab makes this explicit: root_com_lin_vel_b.
-    self.metrics["error_vel_xy"] += (
-      torch.norm(self.vel_command_b[:, :2] - self.robot.data.root_com_lin_vel_b[:, :2], dim=-1) / max_command_step
-    )
-    # TODO(IsaacLab->mjlab): IsaacLab root_ang_vel_b is at COM origin.
-    # mjlab makes this explicit: root_com_ang_vel_b.
-    self.metrics["error_vel_yaw"] += (
-      torch.abs(self.vel_command_b[:, 2] - self.robot.data.root_com_ang_vel_b[:, 2]) / max_command_step
-    )
+    # Metrics are computed in metrics.py (registered via env_cfgs) so that
+    # MetricsManager handles per-step normalization correctly. Keep this as
+    # a no-op since CommandTerm requires the method to exist.
+    pass
 
   def _resample_command(self, env_ids: torch.Tensor):
     # sample velocity commands
@@ -267,47 +250,3 @@ class RMVelocityCommand(CommandTerm):
         (np.array([0, 0, z_offset]) + np.array([lin_vel_w[0], lin_vel_w[1], lin_vel_w[2]])) * scale
       )
       visualizer.add_arrow(cur_from, cur_to, color=(0.2, 0.2, 0.6, 0.7), width=0.015)
-
-  """
-  Internal helpers.
-  """
-  # NOTE: IsaacLab's _resolve_xy_velocity_to_arrow_yaw_frame and
-  # _resolve_xyz_velocity_to_arrow_body_frame computed (scale, quaternion) for
-  # VisualizationMarkers. mjlab's add_arrow takes (start, end) directly, so these
-  # helpers are no longer needed — the equivalent math is inlined in
-  # _debug_vis_impl above.
-
-  @staticmethod
-  def _resolve_xy_velocity_to_arrow_yaw_frame(
-    xy_velocity: torch.Tensor, default_scale: tuple, device: str
-  ) -> tuple[torch.Tensor, torch.Tensor]:
-    """Converts the XY velocity command to arrow direction and scale.
-
-    Kept for parity with the IsaacLab reference; not used by the mjlab
-    DebugVisualizer path (which takes start/end points directly).
-    """
-    arrow_scale = torch.tensor(default_scale, device=device).repeat(xy_velocity.shape[0], 1)
-    arrow_scale[:, 0] *= torch.linalg.norm(xy_velocity, dim=1) * 3.0
-    heading_angle = torch.atan2(xy_velocity[:, 1], xy_velocity[:, 0])
-    zeros = torch.zeros_like(heading_angle)
-    arrow_quat = quat_from_euler_xyz(zeros, zeros, heading_angle)
-    base_yaw_quat = yaw_quat(torch.tensor([[1.0, 0.0, 0.0, 0.0]], device=device).expand(xy_velocity.shape[0], 4))
-    arrow_quat = quat_mul(base_yaw_quat, arrow_quat)
-    return arrow_scale, arrow_quat
-
-  @staticmethod
-  def _resolve_xyz_velocity_to_arrow_body_frame(
-    xyz_velocity: torch.Tensor, default_scale: tuple, device: str
-  ) -> tuple[torch.Tensor, torch.Tensor]:
-    """Converts the XYZ base velocity to arrow direction rotation.
-
-    Kept for parity with the IsaacLab reference; not used by the mjlab
-    DebugVisualizer path.
-    """
-    arrow_scale = torch.tensor(default_scale, device=device).repeat(xyz_velocity.shape[0], 1)
-    arrow_scale[:, 0] *= torch.linalg.norm(xyz_velocity, dim=1) * 3.0
-    heading_angle = torch.atan2(xyz_velocity[:, 1], xyz_velocity[:, 0])
-    pitch_angle = torch.atan2(xyz_velocity[:, 2], torch.linalg.norm(xyz_velocity[:, :2], dim=1))
-    zeros = torch.zeros_like(heading_angle)
-    arrow_quat = quat_from_euler_xyz(zeros, pitch_angle, heading_angle)
-    return arrow_scale, arrow_quat

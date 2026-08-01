@@ -30,6 +30,7 @@ from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 from infantry.tasks.velocity.mdp import observations as infantry_observations
 from infantry.tasks.velocity.mdp import rewards as infantry_rewards
 from infantry.tasks.velocity.mdp.commands_cfg import HeightCommandCfg, RMVelocityCommandCfg
+from infantry.tasks.velocity.mdp.metrics import command_error_height, command_error_vel_xy, command_error_vel_yaw, root_link_pos_w_z
 from mjlab.terrains import TerrainEntityCfg
 from mjlab.terrains.config import ROUGH_TERRAINS_CFG
 from mjlab.utils.noise import UniformNoiseCfg as Unoise
@@ -95,6 +96,10 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
         func=mdp.generated_commands,
         params={"command_name": "base_velocity"},
     ),
+    "height_commands": ObservationTermCfg(
+        func=mdp.generated_commands,
+        params={"command_name": "base_height"},
+    ),
     "joint_pos": ObservationTermCfg(
       func=mdp.joint_pos_rel,
       params={
@@ -124,12 +129,6 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
       history_length=5,
       flatten_history_dim=True,
     ),
-    # "height_scan": ObservationTermCfg(
-    #   func=envs_mdp.height_scan,
-    #   params={"sensor_name": "terrain_scan"},
-    #   # noise=Unoise(n_min=-0.1, n_max=0.1),
-    #   scale=1 / terrain_scan.max_distance,
-    # ),
   }
 
   critic_terms = {
@@ -154,9 +153,11 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
   ##
 
   metrics = {
-    "mean_action_acc": MetricsTermCfg(
-      func=mdp.mean_action_acc,
-    ),
+    "mean_action_acc": MetricsTermCfg(func=mdp.mean_action_acc),
+    "error_vel_xy": MetricsTermCfg(func=command_error_vel_xy),
+    "error_vel_yaw": MetricsTermCfg(func=command_error_vel_yaw),
+    "error_height": MetricsTermCfg(func=command_error_height),
+    "root_link_pos_w_z": MetricsTermCfg(func=root_link_pos_w_z),
   }
 
   ##
@@ -211,7 +212,7 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
       debug_vis=True,
       ranges=RMVelocityCommandCfg.Ranges(
         lin_vel_x=(-1.5, 1.5),
-        lin_vel_y=(-0.0, 0.0),
+        lin_vel_y=(-0.1, 0.1),
         ang_vel_z=(-1.0, 1.0),
         pure_rotation_ang_vel_z=(-8.0, 8.0),
       ),
@@ -221,9 +222,9 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
       resampling_time_range=(10.0, 10.0),
       sensor_name="height_scan",
       ranges=HeightCommandCfg.Ranges(
-        height_z=(0.25, 0.4),
+        height_z=(0.15, 0.40),
       ),
-      debug_vis=False,
+      debug_vis=True,
     ),
   }
 
@@ -389,25 +390,25 @@ def make_infantry_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
         "asset_cfg": SceneEntityCfg("robot", body_names=["base_link"]),
       },
     ),
-    # "base_height_l2": RewardTermCfg(
-    #   func=infantry_rewards.track_base_height_l2,
-    #   weight=-100.0,
-    #   params={
-    #     "asset_cfg": SceneEntityCfg("robot", body_names=["base_link"]),
-    #     "sensor_cfg": SceneEntityCfg("height_scanner"),
-    #     "command_name": "base_height",
-    #   },
-    # ),
-    # "base_height_exp": RewardTermCfg(
-    #   func=infantry_rewards.track_base_height_exp,
-    #   weight=2.0,
-    #   params={
-    #     "asset_cfg": SceneEntityCfg("robot", body_names=["base_link"]),
-    #     "sensor_cfg": SceneEntityCfg("height_scanner"),
-    #     "command_name": "base_height",
-    #     "std": 0.05,
-    #   },
-    # ),
+    "base_height_l2": RewardTermCfg(
+      func=infantry_rewards.track_base_height_l2,
+      weight=-200.0,                         # -100
+      params={
+        "asset_cfg": SceneEntityCfg("robot", body_names=["base_link"]),
+        "sensor_cfg": SceneEntityCfg("height_scan"),
+        "command_name": "base_height",
+      },
+    ),
+    "base_height_exp": RewardTermCfg(
+      func=infantry_rewards.track_base_height_exp,
+      weight=4.0,                            # 2.0
+      params={
+        "asset_cfg": SceneEntityCfg("robot", body_names=["base_link"]),
+        "sensor_cfg": SceneEntityCfg("height_scan"),
+        "command_name": "base_height",
+        "std": 0.02,                          # 0.05
+      },
+    ),
   }
 
   ##

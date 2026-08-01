@@ -1,6 +1,5 @@
 """Height command generator.
 
-Faithful port of the IsaacLab ``HeightCommand`` reference to mjlab.
 Key differences from the IsaacLab original:
   - IsaacLab's ``sensor.data.ray_hits_w`` is replaced by mjlab's
     ``sensor.data.hit_pos_w`` (shape [B, N, 3] vs IsaacLab's [N, 3]).
@@ -13,15 +12,18 @@ Key differences from the IsaacLab original:
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any
 
+import numpy as np
 import torch
 
 from mjlab.entity import Entity
 from mjlab.managers.command_manager import CommandTerm
-from mjlab.sensor import RayCastSensor
 
 if TYPE_CHECKING:
+  import viser
+
   from mjlab.envs.manager_based_rl_env import ManagerBasedRlEnv
   from mjlab.viewer.debug_visualizer import DebugVisualizer
 
@@ -55,8 +57,13 @@ class HeightCommand(CommandTerm):
     # -- command: z height
     self.height_command_z = torch.zeros(self.num_envs, 1, device=self.device)
 
-    # metric for height error
-    self.metrics["error_height"] = torch.zeros(self.num_envs, device=self.device)
+    # Metrics are registered in env_cfgs (metrics.py) via MetricsManager for
+    # correct per-step normalization; no command-side metric accumulation.
+
+    # Set by create_gui() when the viewer is active.
+    self._joystick_enabled: viser.GuiCheckboxHandle | None = None
+    self._joystick_slider: viser.GuiSliderHandle | None = None
+    self._joystick_get_env_idx: Callable[[], int] | None = None
 
   def __str__(self) -> str:
     """Return a string representation of the command generator."""
@@ -80,27 +87,10 @@ class HeightCommand(CommandTerm):
   """
 
   def _update_metrics(self):
-    # time for which the command was executed
-    max_command_time = self.cfg.resampling_time_range[1]
-    max_command_step = max_command_time / self._env.step_dt
-    # logs data
-    if self.sensor_name:
-      sensor: RayCastSensor = self._env.scene[self.sensor_name]
-      # Adjust the target height using the sensor data.
-      # IsaacLab: sensor.data.ray_hits_w[..., 2] (shape [N, 3])
-      # mjlab:    sensor.data.hit_pos_w       (shape [B, N, 3])
-      # Taking [..., 2] then mean over dim=1 yields [B] in both cases.
-      adjusted_target_height = self.height_command_z.squeeze(-1) + torch.mean(
-        sensor.data.hit_pos_w[..., 2], dim=1
-      )
-    else:
-      # Use the provided target height directly for flat terrain
-      adjusted_target_height = self.height_command_z.squeeze(-1)
-    # TODO(IsaacLab->mjlab): IsaacLab root_pos_w is at link origin.
-    # mjlab makes this explicit: root_link_pos_w.
-    self.metrics["error_height"] += (
-      torch.abs(adjusted_target_height - self.robot.data.root_link_pos_w[:, 2]) / max_command_step
-    )
+    # Metrics are computed in metrics.py (registered via env_cfgs) so that
+    # MetricsManager handles per-step normalization correctly. Keep this as
+    # a no-op since CommandTerm requires the method to exist.
+    pass
 
   def _resample_command(self, env_ids: torch.Tensor):
     # sample height commands
@@ -111,6 +101,53 @@ class HeightCommand(CommandTerm):
     """Post-processes the height command."""
     pass
 
+  # GUI.
+
+  def create_gui(
+    self,
+    name: str,
+    server: viser.ViserServer,
+    get_env_idx: Callable[[], int],
+    on_change: Callable[[], None] | None = None,
+    request_action: Callable[[str, Any], None] | None = None,
+  ) -> None:
+    """Create a height slider in the Viser viewer."""
+    lo, hi = self.cfg.ranges.height_z
+    default = (lo + hi) / 2.0
+
+    with server.gui.add_folder(name.capitalize()):
+      enabled = server.gui.add_checkbox("Enable", initial_value=False)
+      slider = server.gui.add_slider(
+        "height_z",
+        min=float(lo),
+        max=float(hi),
+        step=0.01,
+        initial_value=float(default),
+      )
+
+    self._joystick_enabled = enabled
+    self._joystick_slider = slider
+    self._joystick_get_env_idx = get_env_idx
+
+  def compute(self, dt: float) -> None:
+    super().compute(dt)
+    if self._joystick_enabled is not None and self._joystick_enabled.value:
+      assert self._joystick_get_env_idx is not None
+      assert self._joystick_slider is not None
+      idx = self._joystick_get_env_idx()
+      self.height_command_z[idx, 0] = self._joystick_slider.value
+
   def _debug_vis_impl(self, visualizer: DebugVisualizer) -> None:
-    # No debug visualization for the height command (IsaacLab reference was a no-op).
-    pass
+    # Draw target height marker: a green sphere at (robot_x, robot_y, target_z).
+    env_indices = visualizer.get_env_indices(self.num_envs)
+    if not env_indices:
+      return
+    base_pos_ws = self.robot.data.root_link_pos_w.cpu().numpy()
+    for batch in env_indices:
+      base_pos_w = base_pos_ws[batch]
+      if np.linalg.norm(base_pos_w) < 1e-6:
+        continue
+      target_z = float(self.height_command_z[batch, 0])
+      # Green sphere at target height, below the robot's xy position
+      target_pos = np.array([base_pos_w[0], base_pos_w[1], target_z])
+      visualizer.add_sphere(target_pos, radius=0.03, color=(0.0, 0.8, 0.0, 0.9))

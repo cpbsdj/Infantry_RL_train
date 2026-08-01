@@ -6,6 +6,11 @@ from .commands_cfg import (  # noqa: F401
   RMVelocityCommandCfg,
 )
 from .height_command import HeightCommand  # noqa: F401
+from .metrics import (  # noqa: F401
+  command_error_height,
+  command_error_vel_xy,
+  command_error_vel_yaw,
+)
 from .observations import (  # noqa: F401
   base_ang_vel_yaw,
   base_lin_vel_yaw,

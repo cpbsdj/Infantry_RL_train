@@ -21,6 +21,9 @@ def infantry_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.sim.contact_sensor_maxmatch = 64
   cfg.sim.nconmax = None
 
+  if play:
+    cfg.commands["base_height"].ranges.height_z = (0.15, 0.40)
+
   # Switch to flat terrain.
   assert cfg.scene.terrain is not None
   cfg.scene.terrain.terrain_type = "plane"
