@@ -164,7 +164,7 @@ class RMVelocityCommand(CommandTerm):
       enabled = server.gui.add_checkbox("Enable", initial_value=False)
       for label, max_val in axes:
         max_input = server.gui.add_slider(
-          f"Max {label}", initial_value=max_val, step=0.1, min=0.1, max=10.0
+          f"Max {label}", initial_value=max_val, step=0.1, min=0.0, max=10.0
         )
         slider = server.gui.add_slider(
           label, min=-max_val, max=max_val, step=0.05, initial_value=0.0
